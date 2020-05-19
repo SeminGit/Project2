@@ -74,7 +74,9 @@ namespace TweetTrends.DB
 
         private static void FillPolygons()
         {
-            string jsonString = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\states.json").ReadToEnd();
+            string rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+            string jsonString = new StreamReader(rootDirectory + "\\Data\\states.json").ReadToEnd();
             states = JsonConvert.DeserializeObject<Dictionary<string, Data>>(jsonString);
         }
     }

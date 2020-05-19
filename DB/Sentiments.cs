@@ -33,7 +33,9 @@ namespace TweetTrends.DB
 
         private void FillSentimenst()
         {
-            StreamReader reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\sentiments.txt");
+            string rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+
+            StreamReader reader = new StreamReader(rootDirectory + "\\Data\\sentiments.txt");
             string[] sentiments = reader.ReadToEnd().Split("\n".ToCharArray());
             reader.Close();
             foreach(string sentiment in sentiments)

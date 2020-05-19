@@ -65,49 +65,46 @@ namespace TweetTrends.DB
 
         public void FillTweets()
         {
+            string rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             Names = new Dictionary<string, string>();
             StreamReader reader;
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\cali_tweets2014.txt");
-            Names.Add("Cali", reader.ReadToEnd());
-            CaliTweets = reader.ReadToEnd();
-            reader.Close();          
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\family_tweets2014.txt");
+            //reader = new StreamReader(rootDirectory + "\\Data\\cali_tweets2014.txt");
+            //Names.Add("Cali", reader.ReadToEnd());
+            //CaliTweets = reader.ReadToEnd();
+            //reader.Close();          
+
+            reader = new StreamReader(rootDirectory + "\\Data\\family_tweets2014.txt");
             FamilyTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("Family",FamilyTweets);
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\football_tweets2014.txt");
+            reader = new StreamReader(rootDirectory + "\\Data\\football_tweets2014.txt");
             FootballTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("Football",FootballTweets);
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\high_school_tweets2014.txt");
+            reader = new StreamReader(rootDirectory + "\\Data\\high_school_tweets2014.txt");
             HighSchoolTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("High School",HighSchoolTweets);
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\movie_tweets2014.txt");
+            reader = new StreamReader(rootDirectory + "\\Data\\movie_tweets2014.txt");
             MovieTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("Movie",MovieTweets);
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\shopping_tweets2014.txt");
+            reader = new StreamReader(rootDirectory + "\\Data\\shopping_tweets2014.txt");
             ShoppingTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("ShoppingTweets",ShoppingTweets);
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\snow_tweets2014.txt");
-            SnowTweets = reader.ReadToEnd();
-            reader.Close();
-            Names.Add("Show tweets",SnowTweets);
-
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\texas_tweets2014.txt");
+            reader = new StreamReader(rootDirectory + "\\Data\\texas_tweets2014.txt");
             TexasTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("Texas",TexasTweets);
 
-            reader = new StreamReader(@"D:\универ\4  сем\OOP\TweetTrends\Data\weekend_tweets2014.txt");
+            reader = new StreamReader(rootDirectory + "\\Data\\weekend_tweets2014.txt");
             WeekendTweets = reader.ReadToEnd();
             reader.Close();
             Names.Add("Weekend",WeekendTweets);
