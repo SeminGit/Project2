@@ -13,9 +13,7 @@ namespace TweetTrends.Model
 {
     class Tweet
     {
-        private string _date, _text;
-        private double _firstCoordinate, _secondCoordinate, _sentiment;
-        private GMapPolygonHole state;
+        private string _text;
 
         public Tweet(string text,double firstCoordinate,double secondCordinate)
         {
@@ -25,23 +23,11 @@ namespace TweetTrends.Model
             SetState();
         }
 
-        public GMapPolygonHole State
-        {
-            get => state;
-            set
-            {
-                state = value;
-            }
-        }
-
-        public string Date
-        {
-            get => _date;
-            set
-            {
-                _date = value;
-            }
-        }
+        public GMapPolygonHole State { get; set; }
+        public string Date { get; set; }
+        public double FirstCoordinate { get; set; }
+        public double SecondCoordinate { get; set; }
+        public double Sentiment { get; set; }
         public string Text
         {
             get => _text;
@@ -51,31 +37,7 @@ namespace TweetTrends.Model
                 SetSentiment();
             }
         }
-        public double FirstCoordinate
-        {
-            get => _firstCoordinate;
-            set
-            {
-                _firstCoordinate = value;
-            }
-        }
-        public double SecondCoordinate
-        {
-            get => _secondCoordinate;
-            set
-            {
-                _secondCoordinate = value;
-            }
-        }
-        public double Sentiment
-        {
-            get => _sentiment;
-            set
-            {
-                _sentiment = value;
-            }
-        }
-
+       
         private void SetState()
         {            
             foreach(GMapPolygonHole polygon in DataService.GetPolygons.PolygonsList)
