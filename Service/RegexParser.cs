@@ -40,24 +40,6 @@ namespace TweetTrends.Service
             Regex regex = new Regex(regexPattern);
             Match match = regex.Match(text);
             return text.Replace(match.Value, "");
-        }
-        public static string GetTweetCoordinates(string tweet)
-        {
-            Regex regex = new Regex(coordinatesPattern);
-            Match match = regex.Match(tweet);
-            return match.Value;
-        }
-        public static string GetTweetDate(string tweet)
-        {
-            Regex regex = new Regex(datePattern);
-            Match match = regex.Match(tweet);
-            return match.Value;
-        }
-        public static string GetTweetText(string tweet)
-        {
-            Regex regex = new Regex(textPattern);
-            Match match = regex.Match(tweet);
-            return tweet.Replace(match.Value, "");
-        }
+        }   
     }
 }

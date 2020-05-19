@@ -63,7 +63,8 @@ namespace TweetTrends.Service
                 string buf;
                 double longitude, latitude;
                 tweet = tweetsAsString[i];
-                text = RegexParser.FindAndDeleteString(tweet, Constants.textPattern);
+                //text = RegexParser.GetTweetText(tweet);
+                 text = RegexParser.FindAndDeleteString(tweet, Constants.textPattern);
                 buf = RegexParser.FindString(tweet,Constants.coordinatesPattern).Replace("[", "");
                 buf = buf.Replace("]", "");
                 longitude = Double.Parse(buf.Split(',')[0].Replace('.', ','));
