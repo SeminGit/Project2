@@ -86,6 +86,7 @@
     <Compile Include="DB\Data.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\StatesPolygons.cs" />
+    <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\GMapPolygonHole.cs" />
     <Compile Include="Service\PolygonsService.cs" />
     <Compile Include="Service\SentimentsService.cs" />
@@ -100,7 +101,7 @@
     </Compile>
     <Compile Include="DB\Sentiments.cs" />
     <Compile Include="Model\Sentiment.cs" />
-    <Compile Include="Service\Parser.cs" />
+    <Compile Include="Service\RegexParser.cs" />
     <Compile Include="DB\Tweets.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
