@@ -15,7 +15,8 @@ namespace TweetTrends.Service
         {
             get
             {
-                if (sentiments == null) sentiments = TweetTrends.DB.Sentiments.getInstance();
+                DataBase dataBase = DataBase.GetInstance();
+                if (sentiments == null) sentiments = dataBase.SentimentsData;
                 return sentiments;
             }
             

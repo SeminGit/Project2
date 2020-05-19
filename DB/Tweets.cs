@@ -13,18 +13,9 @@ namespace TweetTrends.DB
         public  Dictionary<string,string> Names;
 
         #region Constructors
-        private Tweets()
+        public Tweets()
         {
             Names = new Dictionary<string, string>();
-        }
-        #endregion
-
-        #region Instance
-        private static Tweets instance;
-        public static Tweets getInstance()
-        {
-            if (instance == null) instance = new Tweets();
-            return instance;
         }
         #endregion
     }
