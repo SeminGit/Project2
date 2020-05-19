@@ -14,11 +14,7 @@ namespace TweetTrends.Service
 
     class RegexParser
     {
-        public static string tweetPattern = @"\[[^\]]+\])(\s_\s[^\[]+",
-                             coordinatesPattern = @"\[[\d.,\s-]+\]",
-                             datePattern = @"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}",
-                             textPattern = @"\[[^\]]+\]\s_\s\d{ 4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\s";
-        public static List<String> GetListOfMatchedStrigns(String text, string regexPattern)
+        public static List<String> GetListOfMatchedStrings(String text, string regexPattern)
         {
             Regex regex = new Regex(regexPattern);
             MatchCollection collection = regex.Matches(text);

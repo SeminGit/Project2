@@ -25,12 +25,31 @@ namespace TweetTrends.Service
                 instance = new TweetsService();
             return instance;
         }
-
         public List<Tweet> GetTweets(string name)
+        {
+            tweetsList = new List<Tweet>();
+            List<string> allDataTweets = RegexParser.GetListOfMatchedStrings(twBase.Names[name], Constants.tweetPattern);
+            Task[] parsingTweetsTasks = new Task[4];
+            for (int i = 0; i < parsingTweetsTasks.Length; i++)
+            {
+                int start = (allDataTweets.Count / 10) * i;
+                int end = (allDataTweets.Count / 10) * (i + 1);
+                parsingTweetsTasks[i] = new Task(() => { Parsing(allDataTweets, start, end); });
+            }
+            for (int i = 0; i < parsingTweetsTasks.Length; i++)
+            {
+                parsingTweetsTasks[i].Start();
+            }
+
+            Task.WaitAll(parsingTweetsTasks);
+            this.tweets.Add(name, tweetsList);
+            return tweetsList;
+        }
+        /*public List<Tweet> GetTweets(string name)
         {
            
             tweetsList = new List<Tweet>();
-            List<string> tweetsAsString = RegexParser.GetListOfMatchedStrigns(twBase.Names[name], Constants.tweetPattern);
+            List<string> tweetsAsString = RegexParser.GetListOfMatchedStrings(twBase.Names[name], Constants.tweetPattern);
             Thread[] threads = new Thread[tweetsAsString.Count/20+1];
             for (int i = 0; i < threads.Length; i++)
             {
@@ -51,7 +70,7 @@ namespace TweetTrends.Service
 
             this.tweets.Add(name, tweetsList);
             return tweetsList;
-        }
+        }*/
 
         private void Parsing(List<string> tweetsAsString,int start,int end)
         {
@@ -59,12 +78,11 @@ namespace TweetTrends.Service
             if (start > tweetsAsString.Count) return;
             for (int i = start; i < end&&i<tweetsAsString.Count; i++)
             {
-                string text;
-                string buf;
+                string text, buf;
                 double longitude, latitude;
                 tweet = tweetsAsString[i];
                 //text = RegexParser.GetTweetText(tweet);
-                 text = RegexParser.FindAndDeleteString(tweet, Constants.textPattern);
+                text = RegexParser.FindAndDeleteString(tweet, Constants.textPattern);
                 buf = RegexParser.FindString(tweet,Constants.coordinatesPattern).Replace("[", "");
                 buf = buf.Replace("]", "");
                 longitude = Double.Parse(buf.Split(',')[0].Replace('.', ','));

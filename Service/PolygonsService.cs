@@ -17,11 +17,9 @@ namespace TweetTrends.Service
             get
             {
                 if (polygons == null) polygons = TweetTrends.DB.StatesPolygons.getInstance();
-                return polygons;                             
+                return polygons;
             }
 
         }
-
-       
     }
 }

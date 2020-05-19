@@ -74,7 +74,7 @@ namespace TweetTrends
             sentimentValue *= 5;           
             if (sentimentValue > 0)
             {
-                //color = Colors.Blue;
+                //good = yellow
                 if (145 + sentimentValue > 255) sentimentValue = 255;
                 else sentimentValue += 145;
                 return Color.FromArgb((byte)(200), (byte)(255),
@@ -100,7 +100,7 @@ namespace TweetTrends
                 Map.RegenerateShape(polygon);
                 (polygon.Shape as Path).Fill = new SolidColorBrush(StateColor(sentimentRate[polygon]));
                 (polygon.Shape as Path).Stroke = Brushes.DarkBlue;
-                (polygon.Shape as Path).StrokeThickness = 1.5;
+                (polygon.Shape as Path).StrokeThickness = 1.0;
                 Map.Markers.Add(polygon);               
             }
             NullInDictionary();
