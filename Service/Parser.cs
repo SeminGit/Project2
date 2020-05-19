@@ -14,13 +14,14 @@ namespace TweetTrends.Service
 
     class Parser
     {
-        private static Regex tweetRegex = new Regex(@"(\[[^\]]+\])(\s_\s[^\[]+)");
-        private static Regex coordinatesRegex = new Regex(@"(\[[\d.,\s-]+\])");
-        private static Regex dateRegex = new Regex(@"(\d{4}-\d{2}-\d\d\s\d\d:\d\d:\d\d)");
-        private static Regex textRegex = new Regex(@"(\[[^\]]+\])\s_\s(\d{4}-\d{2}-\d\d\s\d\d:\d\d:\d\d)\s");
-        public static List<String> GetTweetAsString(String Tweets)
+        public static string tweetPattern = @"\[[^\]]+\])(\s_\s[^\[]+",
+                             coordinatesPattern = @"\[[\d.,\s-]+\]",
+                             datePattern = @"\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}",
+                             textPattern = @"\[[^\]]+\]\s_\s\d{ 4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\s";
+        public static List<String> GetTweetAsString(String Tweets, string regexPattern)
         {
-            MatchCollection collection = tweetRegex.Matches(Tweets);
+            Regex regex = new Regex(regexPattern);
+            MatchCollection collection = regex.Matches(Tweets);
             List<string> tweets = new List<string>();
             foreach(Match tw in collection)
             {
@@ -28,19 +29,28 @@ namespace TweetTrends.Service
             }
             return tweets;
         }
+        public static string FindString(string text, string regexPattern)
+        {
+            Regex regex = new Regex(regexPattern);
+            Match match = regex.Match(text);
+            return match.Value;
+        }
         public static string GetTweetCoordinates(string tweet)
         {
-            Match match = coordinatesRegex.Match(tweet);
+            Regex regex = new Regex(coordinatesPattern);
+            Match match = regex.Match(tweet);
             return match.Value;
         }
         public static string GetTweetDate(string tweet)
         {
-            Match match = dateRegex.Match(tweet);
+            Regex regex = new Regex(datePattern);
+            Match match = regex.Match(tweet);
             return match.Value;
         }
         public static string GetTweetText(string tweet)
         {
-            Match match = textRegex.Match(tweet);
+            Regex regex = new Regex(textPattern);
+            Match match = regex.Match(tweet);
             return tweet.Replace(match.Value, "");
         }
     }

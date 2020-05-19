@@ -86,6 +86,7 @@
     <Compile Include="DB\Data.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\StatesPolygons.cs" />
+    <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\GMapPolygonHole.cs" />
     <Compile Include="Service\PolygonsService.cs" />
     <Compile Include="Service\SentimentsService.cs" />
