@@ -17,68 +17,54 @@ namespace TweetTrends.DB
         public Tweets TweetsData { get; set; }
 
         #region Static
-        private Dictionary<string, string> _tweetsDataFiles;
         public static string TweetsDataPath { get; set; }
+        public static Dictionary<string, string> Files { get; set; }
         private static DataBase _instance;
         public static DataBase GetInstance()
         {
             if ( _instance == null ) _instance = new DataBase();
             return _instance;
         }
-        public static bool AddTweetsFile(string fileType, string filePath)
-        {
-            return true;
-        }
         #endregion
 
         public DataBase()
         {
-            if(string.IsNullOrEmpty(TweetsDataPath)) TweetsDataPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Data";
+            if(string.IsNullOrWhiteSpace(TweetsDataPath)) TweetsDataPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Data";
+            if ( Files == null )
+            {
+                Files = new Dictionary<string, string>();
+                Files.Add("family_tweets2014.txt", "Family");
+                Files.Add("football_tweets2014.txt", "Football");
+                Files.Add("high_school_tweets2014.txt", "High School");
+                Files.Add("movie_tweets2014.txt", "Movie");
+                Files.Add("shopping_tweets2014.txt", "Shopping");
+                Files.Add("texas_tweets2014.txt", "Texas");
+                Files.Add("weekend_tweets2014.txt", "Weekend");
+            }
+
             TweetsData = Tweets.getInstance();
-            ReadTweetsData(TweetsDataPath);
+            ReadTweetsData(TweetsDataPath, Files);
         }
 
-        public bool ReadTweetsData(string dataPath)
+        public void ReadTweetsData(string dataPath, Dictionary<string, string> files)
         {
-            string data = "";
+            if ( files == null || dataPath == null ) return;
+
             StreamReader reader;
-
-            reader = new StreamReader(dataPath + "\\family_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("Family", data);
-
-            reader = new StreamReader(dataPath + "\\football_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("Football", data);
-
-            reader = new StreamReader(dataPath + "\\high_school_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("High School", data);
-
-            reader = new StreamReader(dataPath + "\\movie_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("Movie", data);
-
-            reader = new StreamReader(dataPath + "\\shopping_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("ShoppingTweets", data);
-
-            reader = new StreamReader(dataPath + "\\texas_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("Texas", data);
-
-            reader = new StreamReader(dataPath + "\\weekend_tweets2014.txt");
-            data = reader.ReadToEnd();
-            reader.Close();
-            TweetsData.Names.Add("Weekend", data);
-
-            return true;
+            foreach (KeyValuePair<string, string> fileInfo in files )
+            {
+                try
+                {
+                    string fullDataPath = dataPath + "\\" + fileInfo.Key;
+                    reader = new StreamReader(fullDataPath);
+                    TweetsData.Names.Add(fileInfo.Value, reader.ReadToEnd());
+                    reader.Close();
+                }
+                catch
+                {
+                    continue;
+                }
+            }
         }
     }
 }
