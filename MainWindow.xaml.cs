@@ -1,11 +1,8 @@
 ﻿using GMap.NET;
-using GMap.NET.WindowsPresentation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TweetTrands.Utility;
@@ -23,7 +20,7 @@ namespace TweetTrends
     {
         #region Variables
         private TweetsService service = TweetsService.getInstance();
-        private Dictionary<GMapPolygonHole, double> sentimentRate;
+        private Dictionary<GMapPolygonHole, double> stateSentimentRate;
         private DataBase _database = DataBase.GetInstance();
         #endregion
 
@@ -45,10 +42,10 @@ namespace TweetTrends
             Map.CanDragMap = Constants.MaxCanDrop;
             Map.DragButton = Constants.MapDragButton;
 
-            sentimentRate = new Dictionary<GMapPolygonHole, double>();
+            stateSentimentRate = new Dictionary<GMapPolygonHole, double>();
             foreach (GMapPolygonHole pol in _database.StatesPolygonsData.PolygonsList)
             {
-                sentimentRate.Add(pol, 0);
+                stateSentimentRate.Add(pol, 0);
             }
             TweetName.ItemsSource = Names;
         }
@@ -69,7 +66,7 @@ namespace TweetTrends
             else if (sentimentValue < 0)
             {
                 // bad = red
-                if (200 + sentimentValue < 0)
+                if (200 + sentimentValue * 10 < 0)
                     sentimentValue = 0;
                 else sentimentValue *= 10;
                 return Color.FromArgb(200, 255, (byte)(200 + sentimentValue), 0);
@@ -80,47 +77,42 @@ namespace TweetTrends
 
         private void TweetName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FillDictionary(TweetName.SelectedItem.ToString());
-            foreach (GMapPolygonHole polygon in  _database.StatesPolygonsData.PolygonsList )
+            FillStateRates(TweetName.SelectedItem.ToString());
+            foreach (GMapPolygonHole polygon in _database.StatesPolygonsData.PolygonsList)
             {
                 polygon.Shape = new Path();
                 Map.RegenerateShape(polygon);
-                (polygon.Shape as Path).Fill = new SolidColorBrush(StateColor(sentimentRate[polygon]));
+                (polygon.Shape as Path).Fill = new SolidColorBrush(StateColor(stateSentimentRate[polygon]));
                 (polygon.Shape as Path).Stroke = Brushes.DarkBlue;
                 (polygon.Shape as Path).StrokeThickness = 1.0;
-                Map.Markers.Add(polygon);               
+                Map.Markers.Add(polygon);
             }
-            NullInDictionary();
+            ClearStateRates();
         }
 
-        private void FillDictionary(string name)
+        private void FillStateRates(string name)
         {
             if (service.Tweets.ContainsKey(name))
             {
                 foreach (Tweet tweet in service.Tweets[name])
                 {
                     if (tweet == null || tweet.State == null) continue;
-                    double value = sentimentRate[tweet.State] + tweet.Sentiment;
-                    sentimentRate.Remove(tweet.State);
-                    sentimentRate.Add(tweet.State, value);
+                    stateSentimentRate[tweet.State] += tweet.Sentiment;
                 }
                 return;
             }
             foreach (Tweet tweet in service.GetTweets(name))
             {
-                if (tweet==null||tweet.State == null) continue;
-                double value = sentimentRate[tweet.State] + tweet.Sentiment;
-                sentimentRate.Remove(tweet.State);
-                sentimentRate.Add(tweet.State,value);
+                if (tweet == null || tweet.State == null) continue;
+                stateSentimentRate[tweet.State] += tweet.Sentiment;
             }
         }
 
-        private void NullInDictionary()
+        private void ClearStateRates()
         {
-            foreach(GMapPolygonHole key in sentimentRate.Keys.ToList())
+            foreach (GMapPolygonHole key in stateSentimentRate.Keys.ToList())
             {
-                sentimentRate.Remove(key);
-                sentimentRate.Add(key, 0);
+                stateSentimentRate[key] = 0;
             }
         }
     }
