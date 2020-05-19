@@ -84,6 +84,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DB\Data.cs" />
+    <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\StatesPolygons.cs" />
     <Compile Include="Model\GMapPolygonHole.cs" />
     <Compile Include="Service\PolygonsService.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="DB\Sentiments.cs" />
     <Compile Include="Model\Sentiment.cs" />
     <Compile Include="Service\Parser.cs" />
-    <Compile Include="DB\TweetBase.cs" />
+    <Compile Include="DB\Tweets.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

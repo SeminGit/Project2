@@ -11,10 +11,7 @@ namespace TweetTrends.DB
     class Sentiments
     {
         private static Sentiments instance;
-        public List<Sentiment> SentimentsList
-        {
-            get;set;
-        }
+        public List<Sentiment> SentimentsList { get; set; }
 
 
 

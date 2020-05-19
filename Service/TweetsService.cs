@@ -13,8 +13,10 @@ namespace TweetTrends.Service
     {
         private static TweetsService instance;
         private Dictionary<string, List<Tweet>> tweets = new Dictionary<string, List<Tweet>>();
-        private TweetBase twBase;
+        private Tweets twBase;
         private List<Tweet> tweetsList;
+
+        private DataBase _dataBase;
 
         public static TweetsService getInstance()
         {
@@ -71,7 +73,8 @@ namespace TweetTrends.Service
 
         private TweetsService()
         {
-            twBase = TweetBase.getInstance();
+            _dataBase = DataBase.GetInstance();
+            twBase = _dataBase.TweetsData;
         }
 
         public List<string> Names
