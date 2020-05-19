@@ -9,11 +9,12 @@
         Title="MainWindow" Height="900" Width="1000" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <gmaps:GMapControl Grid.Row="1" x:Name="Map" Loaded="Map_Loaded" Height="900" Width="1000" />
-        <ComboBox Name="TweetName" Width="250" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-                  FontSize="20" SelectionChanged="TweetName_SelectionChanged" HorizontalAlignment="Left"/>
+        
+        <ComboBox Name="TweetName" SelectionChanged="TweetName_SelectionChanged"/>
+        <gmaps:GMapControl Grid.Row="1" x:Name="Map" Loaded="Map_Loaded"/>
+
     </Grid>
 </Window>

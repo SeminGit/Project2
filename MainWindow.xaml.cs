@@ -1,18 +1,12 @@
-﻿using GMap.NET.WindowsPresentation;
+﻿using GMap.NET;
+using GMap.NET.WindowsPresentation;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TweetTrands.Utility;
 using TweetTrends.DB;
@@ -27,26 +21,30 @@ namespace TweetTrends
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Variables
         private TweetsService service = TweetsService.getInstance();
         private Dictionary<GMapPolygonHole, double> sentimentRate;
         private DataBase _database = DataBase.GetInstance();
+        #endregion
 
+        #region Constructors
         public MainWindow()
         {
             InitializeComponent();
         }
+        #endregion
 
         private void Map_Loaded(object sender, RoutedEventArgs e)
         {
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-            Sentiments st = SentimentsService.Sentiments;
+            GMaps.Instance.Mode = Constants.MapAccessMode;
             Map.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
-            Map.MinZoom = 2;
-            Map.MaxZoom = 17;
-            Map.Zoom = 2;
-            Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            Map.CanDragMap = true;
-            Map.DragButton = MouseButton.Left;
+            Map.MinZoom = Constants.MinMapZoom;
+            Map.MaxZoom = Constants.MaxMapZoom;
+            Map.Zoom = Constants.MapZoom;
+            Map.MouseWheelZoomType = Constants.MapMouseWheelZoomType;
+            Map.CanDragMap = Constants.MaxCanDrop;
+            Map.DragButton = Constants.MapDragButton;
+
             sentimentRate = new Dictionary<GMapPolygonHole, double>();
             foreach (GMapPolygonHole pol in _database.StatesPolygonsData.PolygonsList)
             {
@@ -55,13 +53,7 @@ namespace TweetTrends
             TweetName.ItemsSource = Names;
         }
 
-        public List<string> Names
-        {
-            get => service.Names;
-
-        }
-
-
+        public List<string> Names => service.Names;
 
         private Color StateColor(double sentimentValue)
         {

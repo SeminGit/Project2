@@ -13,7 +13,7 @@ namespace TweetTrends.DB
 {
     class StatesPolygons
     {
-        public Dictionary<string, Data> Polygons { get; set; }
+        public Dictionary<string, Polygon> Polygons { get; set; }
         public List<GMapPolygonHole> PolygonsList { get; set; }
 
         public void FillPoints()
@@ -33,7 +33,6 @@ namespace TweetTrends.DB
                     points = new List<PointLatLng>();
                 }
             }
-
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TweetTrends.DB
 {
-    class Data
+    class Polygon
     {
         [JsonProperty("polygons")]
         public List<List<List<List<double>>>> Polygons { get; set; }

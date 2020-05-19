@@ -117,7 +117,7 @@ namespace TweetTrends.DB
             try
             {
                 string jsonString = new StreamReader(fullPath).ReadToEnd();
-                StatesPolygonsData.Polygons = JsonConvert.DeserializeObject<Dictionary<string, Data>>(jsonString);
+                StatesPolygonsData.Polygons = JsonConvert.DeserializeObject<Dictionary<string, Polygon>>(jsonString);
             }
             catch
             {
