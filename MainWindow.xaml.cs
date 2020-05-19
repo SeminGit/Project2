@@ -65,25 +65,25 @@ namespace TweetTrends
 
         private Color StateColor(double sentimentValue)
         {
-            var color = Colors.White;
-            sentimentValue *= 5;           
+            sentimentValue *= 7;
             if (sentimentValue > 0)
             {
                 //good = yellow
-                if (145 + sentimentValue > 255) sentimentValue = 255;
+                if (145 + sentimentValue > 255)
+                    sentimentValue = 255;
                 else sentimentValue += 145;
-                return Color.FromArgb((byte)(200), (byte)(255),
-                    (byte)(sentimentValue), (byte)(0));
+                return Color.FromArgb(200, 255, (byte)(sentimentValue), 0);
             }
             else if (sentimentValue < 0)
             {
-                // color = Colors.Yellow;
-                if (200 + sentimentValue < 0) sentimentValue = 0;
+                // bad = red
+                if (200 + sentimentValue < 0)
+                    sentimentValue = 0;
                 else sentimentValue *= 10;
-                return Color.FromArgb((byte)(200), (byte)(0),
-                    (byte)(200+sentimentValue), (byte)(255));
+                return Color.FromArgb(200, 255, (byte)(200 + sentimentValue), 0);
             }
-            return Color.FromArgb(200, 80, 80, 80);
+            // no info
+            return Color.FromArgb(200, 0, 0, 0);
         }
 
         private void TweetName_SelectionChanged(object sender, SelectionChangedEventArgs e)
