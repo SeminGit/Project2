@@ -101,7 +101,7 @@
     </Compile>
     <Compile Include="DB\Sentiments.cs" />
     <Compile Include="Model\Sentiment.cs" />
-    <Compile Include="Service\Parser.cs" />
+    <Compile Include="Service\RegexParser.cs" />
     <Compile Include="DB\Tweets.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -29,7 +29,7 @@ namespace TweetTrends.Service
         {
            
             tweetsList = new List<Tweet>();
-            List<string> tweetsAsString = Parser.GetTweetAsString(twBase.Names[name]);
+            List<string> tweetsAsString = RegexParser.GetListOfMatchedStrigns(twBase.Names[name], Constants.tweetPattern);
             Thread[] threads = new Thread[tweetsAsString.Count/20+1];
             for (int i = 0; i < threads.Length; i++)
             {
@@ -60,14 +60,14 @@ namespace TweetTrends.Service
             {
                 string text;
                 string buf;
-                double c1, c2;
+                double longitude, latitude;
                 tweet = tweetsAsString[i];
-                text = Parser.GetTweetText(tweet);
-                buf = Parser.GetTweetCoordinates(tweet).Replace("[", "");
+                text = RegexParser.FindAndDeleteString(tweet, Constants.textPattern);
+                buf = RegexParser.FindString(tweet,Constants.coordinatesPattern).Replace("[", "");
                 buf = buf.Replace("]", "");
-                c1 = Double.Parse(buf.Split(',')[0].Replace('.', ','));
-                c2 = Double.Parse(buf.Split(',')[1].Replace('.', ','));
-                tweetsList.Add(new Tweet(text, c1, c2));
+                longitude = Double.Parse(buf.Split(',')[0].Replace('.', ','));
+                latitude = Double.Parse(buf.Split(',')[1].Replace('.', ','));
+                tweetsList.Add(new Tweet(text, longitude, latitude));
             }
         }
 
