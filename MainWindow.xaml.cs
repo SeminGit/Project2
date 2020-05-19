@@ -27,33 +27,28 @@ namespace TweetTrends
     /// </summary>
     public partial class MainWindow : Window
     {
-        TweetsService service;
+        private TweetsService service = TweetsService.getInstance();
         private Dictionary<GMapPolygonHole, double> sentimentRate;
+        private DataBase _database = DataBase.GetInstance();
+
         public MainWindow()
         {
             InitializeComponent();
-            service = TweetsService.getInstance();
         }
 
         private void Map_Loaded(object sender, RoutedEventArgs e)
         {
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             Sentiments st = SentimentsService.Sentiments;
-            // choose your provider here
-            // mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
             Map.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
             Map.MinZoom = 2;
             Map.MaxZoom = 17;
-            // whole world zoom
             Map.Zoom = 2;
-            // lets the map use the mousewheel to zoom
             Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            // lets the user drag the map
             Map.CanDragMap = true;
-            // lets the user drag the map with the left mouse button
             Map.DragButton = MouseButton.Left;
             sentimentRate = new Dictionary<GMapPolygonHole, double>();
-            foreach (GMapPolygonHole pol in PolygonsService.Polygons.PolygonsList)
+            foreach (GMapPolygonHole pol in _database.StatesPolygonsData.PolygonsList)
             {
                 sentimentRate.Add(pol, 0);
             }
@@ -94,7 +89,7 @@ namespace TweetTrends
         private void TweetName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FillDictionary(TweetName.SelectedItem.ToString());
-            foreach (GMapPolygonHole polygon in PolygonsService.Polygons.PolygonsList)
+            foreach (GMapPolygonHole polygon in  _database.StatesPolygonsData.PolygonsList )
             {
                 polygon.Shape = new Path();
                 Map.RegenerateShape(polygon);

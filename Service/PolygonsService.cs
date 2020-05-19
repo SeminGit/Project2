@@ -10,16 +10,8 @@ namespace TweetTrends.Service
 {
     class PolygonsService
     {
-        private static StatesPolygons polygons;
+        private static DataBase _database = DataBase.GetInstance();
 
-        public static StatesPolygons Polygons
-        {
-            get
-            {
-                if (polygons == null) polygons = TweetTrends.DB.StatesPolygons.getInstance();
-                return polygons;
-            }
-
-        }
+        public static StatesPolygons Polygons => _database.StatesPolygonsData;
     }
 }

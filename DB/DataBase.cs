@@ -14,12 +14,14 @@ namespace TweetTrends.DB
         #region Properties
         public Tweets TweetsData { get; set; }
         public Sentiments SentimentsData { get; set; }
+        public StatesPolygons StatesPolygonsData { get; set; }
         #endregion
 
         #region Static
-        public static string TweetsDataPath { get; set; }
+        public static string DataPath { get; set; }
         public static Dictionary<string, string> TweetsFiles { get; set; }
         public static string SentimentsFile { get; set; }
+        public static string StatesFile { get; set; }
 
         private static DataBase _instance;
         public static DataBase GetInstance()
@@ -32,7 +34,7 @@ namespace TweetTrends.DB
         #region Constructors
         public DataBase()
         {
-            if(string.IsNullOrWhiteSpace(TweetsDataPath)) TweetsDataPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Data";
+            if(string.IsNullOrWhiteSpace(DataPath) ) DataPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Data";
             if ( TweetsFiles == null )
             {
                 TweetsFiles = new Dictionary<string, string>();
@@ -44,13 +46,18 @@ namespace TweetTrends.DB
                 TweetsFiles.Add("texas_tweets2014.txt", "Texas");
                 TweetsFiles.Add("weekend_tweets2014.txt", "Weekend");
             }
-            if(SentimentsFile == null )
+            if( SentimentsFile == null )
             {
                 SentimentsFile = "sentiments.txt";
             }
+            if(StatesFile == null )
+            {
+                StatesFile = "states.json";
+            }
 
-            TweetsData = ReadTweetsData(TweetsDataPath, TweetsFiles);
-            SentimentsData = ReadSentiments(TweetsDataPath, SentimentsFile);
+            TweetsData = ReadTweetsData(DataPath, TweetsFiles);
+            SentimentsData = ReadSentiments(DataPath, SentimentsFile);
+            StatesPolygonsData = ReadStates(DataPath, StatesFile);
         }
         #endregion
 
@@ -100,6 +107,25 @@ namespace TweetTrends.DB
             }
 
             return sentimentsData;
+        }
+        public StatesPolygons ReadStates(string dataPath, string file)
+        {
+            if ( string.IsNullOrWhiteSpace(dataPath) || string.IsNullOrWhiteSpace(file) ) return new StatesPolygons();
+
+            StatesPolygonsData = new StatesPolygons();
+            string fullPath = dataPath + "\\" + file;
+            try
+            {
+                string jsonString = new StreamReader(fullPath).ReadToEnd();
+                StatesPolygonsData.Polygons = JsonConvert.DeserializeObject<Dictionary<string, Data>>(jsonString);
+            }
+            catch
+            {
+                return new StatesPolygons();
+            }
+
+            StatesPolygonsData.FillPoints();
+            return StatesPolygonsData;
         }
         #endregion
     }

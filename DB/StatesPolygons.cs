@@ -13,50 +13,14 @@ namespace TweetTrends.DB
 {
     class StatesPolygons
     {
-        private static Dictionary<string, Data> states;
-        private static List<GMapPolygonHole> polygons;
+        public Dictionary<string, Data> Polygons { get; set; }
+        public List<GMapPolygonHole> PolygonsList { get; set; }
 
-        private static StatesPolygons instance;
-
-
-
-        private StatesPolygons()
-        {
-            FillPoints();
-            FillPolygons();
-        }
-
-        public static StatesPolygons getInstance()
-        {
-            if (instance == null)
-                instance = new StatesPolygons();
-            return instance;
-        }
-
-
-        public List<GMapPolygonHole> PolygonsList
-        {
-            get
-            {
-                if (polygons == null) FillPoints();
-                return polygons;
-            }
-        }
-        public Dictionary<string, Data> Polygons
-        {
-            get
-            {
-
-                if (states == null) FillPolygons();
-                return states;
-            }
-        }
-
-        private void FillPoints()
+        public void FillPoints()
         {
 
             List<PointLatLng> points = new List<PointLatLng>();
-            polygons = new List<GMapPolygonHole>();
+            PolygonsList = new List<GMapPolygonHole>();
             foreach (string key in Polygons.Keys)
             {
                 foreach (List<List<List<double>>> listOfLists in Polygons[key].Polygons)
@@ -65,19 +29,11 @@ namespace TweetTrends.DB
                     {
                         points.Add(new PointLatLng(list[1], list[0]));
                     }
-                    polygons.Add(new GMapPolygonHole(points));
+                    PolygonsList.Add(new GMapPolygonHole(points));
                     points = new List<PointLatLng>();
                 }
             }
 
-        }
-
-        private static void FillPolygons()
-        {
-            string rootDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-
-            string jsonString = new StreamReader(rootDirectory + "\\Data\\states.json").ReadToEnd();
-            states = JsonConvert.DeserializeObject<Dictionary<string, Data>>(jsonString);
         }
     }
 }
