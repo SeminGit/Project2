@@ -33,6 +33,7 @@ namespace TweetTrends.Model
                 state = value;
             }
         }
+
         public string Date
         {
             get => _date;
@@ -77,7 +78,7 @@ namespace TweetTrends.Model
 
         private void SetState()
         {            
-            foreach(GMapPolygonHole polygon in PolygonsService.Polygons.PolygonsList)
+            foreach(GMapPolygonHole polygon in DataService.GetPolygons.PolygonsList)
             {
                 if(polygon.IsPointInsidePolygon(new PointLatLng(FirstCoordinate, SecondCoordinate),true))
                 {
@@ -93,7 +94,7 @@ namespace TweetTrends.Model
             Sentiment = 0;
             foreach(Match word in collection)
             {
-                value = SentimentsService.Sentiments.SentimentValue(word.Value);
+                value = DataService.GetSentiments.SentimentValue(word.Value);
                 if (Double.IsNaN(value)) continue;
                 Sentiment += value;
             }

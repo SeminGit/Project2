@@ -45,32 +45,6 @@ namespace TweetTrends.Service
             this.tweets.Add(name, tweetsList);
             return tweetsList;
         }
-        /*public List<Tweet> GetTweets(string name)
-        {
-           
-            tweetsList = new List<Tweet>();
-            List<string> tweetsAsString = RegexParser.GetListOfMatchedStrings(twBase.Names[name], Constants.tweetPattern);
-            Thread[] threads = new Thread[tweetsAsString.Count/20+1];
-            for (int i = 0; i < threads.Length; i++)
-            {
-                int start = (tweetsAsString.Count / 10) * i;
-                int end = (tweetsAsString.Count / 10) * (i + 1);
-                threads[i] = new Thread(() => { Parsing(tweetsAsString,start, end); });
-            }           
-            for (int i = 0; i < threads.Length; i++)
-            {
-                threads[i].Start();
-            }
-
-            for (int i = 0; i < threads.Length; i++)
-            {
-                threads[i].Join();
-            }
-
-
-            this.tweets.Add(name, tweetsList);
-            return tweetsList;
-        }*/
 
         private void Parsing(List<string> tweetsAsString,int start,int end)
         {
@@ -97,14 +71,8 @@ namespace TweetTrends.Service
             twBase = _dataBase.TweetsData;
         }
 
-        public List<string> Names
-        {
-            get => twBase.Names.Keys.ToList<string>();
-        }
+        public List<string> Names => twBase.Names.Keys.ToList<string>();
 
-        public Dictionary<string, List<Tweet>> Tweets
-        {
-            get => tweets;
-        }
+        public Dictionary<string, List<Tweet>> Tweets => tweets;
     }
 }

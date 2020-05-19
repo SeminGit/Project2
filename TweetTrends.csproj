@@ -88,8 +88,7 @@
     <Compile Include="DB\StatesPolygons.cs" />
     <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\GMapPolygonHole.cs" />
-    <Compile Include="Service\PolygonsService.cs" />
-    <Compile Include="Service\SentimentsService.cs" />
+    <Compile Include="Service\DataService.cs" />
     <Compile Include="Service\TweetsService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
