@@ -53,6 +53,8 @@ namespace TweetTrends
             TweetName.ItemsSource = Names;
         }
 
+
+
         public List<string> Names => service.Names;
 
         private Color StateColor(double sentimentValue)
