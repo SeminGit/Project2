@@ -15,18 +15,18 @@ namespace TweetTrends.Model
     {
         private string _text;
 
-        public Tweet(string text,double firstCoordinate,double secondCordinate)
+        public Tweet(string text,double longitude,double latitude)
         {
             Text = text;
-            FirstCoordinate = firstCoordinate;
-            SecondCoordinate = secondCordinate;
+            Longitude = longitude;
+            Latitude = latitude;
             SetState();
         }
 
         public GMapPolygonHole State { get; set; }
         public string Date { get; set; }
-        public double FirstCoordinate { get; set; }
-        public double SecondCoordinate { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         public double Sentiment { get; set; }
         public string Text
         {
@@ -42,7 +42,7 @@ namespace TweetTrends.Model
         {            
             foreach(GMapPolygonHole polygon in DataService.GetPolygons.PolygonsList)
             {
-                if(polygon.IsPointInsidePolygon(new PointLatLng(FirstCoordinate, SecondCoordinate),true))
+                if(polygon.IsPointInsidePolygon(new PointLatLng(Longitude, Latitude),true))
                 {
                     State = polygon;
                     return;

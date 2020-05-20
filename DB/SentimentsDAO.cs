@@ -8,11 +8,11 @@ using TweetTrends.Model;
 
 namespace TweetTrends.DB
 {
-    class Sentiments
+    class SentimentsDAO
     {
         public List<Sentiment> SentimentsList { get; set; }
 
-        public Sentiments()
+        public SentimentsDAO()
         {
             SentimentsList = new List<Sentiment>();
         }

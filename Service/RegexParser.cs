@@ -7,11 +7,6 @@ using System.Text.RegularExpressions;
 
 namespace TweetTrends.Service
 {
-    //(\[[^\]]+\])(\s_\s[^\[]+) - Tweet
-    //(\[[^\]]+\]) - cordinates
-    //(\d{4}-\d{2}-\d\d\s\d\d:\d\d:\d\d) - date
-    // (\[[^\]]+\])\s_\s(\d{4}-\d{2}-\d\d\s\d\d:\d\d:\d\d)\s - split to get text
-
     class RegexParser
     {
         public static List<String> GetListOfMatchedStrings(String text, string regexPattern)

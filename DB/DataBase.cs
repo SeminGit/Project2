@@ -13,8 +13,8 @@ namespace TweetTrends.DB
     {
         #region Properties
         public Tweets TweetsData { get; set; }
-        public Sentiments SentimentsData { get; set; }
-        public StatesPolygons StatesPolygonsData { get; set; }
+        public SentimentsDAO SentimentsData { get; set; }
+        public StatePolygonsDAO StatesPolygonsData { get; set; }
         #endregion
 
         #region Static
@@ -85,10 +85,10 @@ namespace TweetTrends.DB
 
             return tweets;
         }
-        public Sentiments ReadSentiments(string dataPath, string file)
+        public SentimentsDAO ReadSentiments(string dataPath, string file)
         {
-            if ( dataPath == null || file == null ) return new Sentiments();
-            Sentiments sentimentsData = new Sentiments();
+            if ( dataPath == null || file == null ) return new SentimentsDAO();
+            SentimentsDAO sentimentsData = new SentimentsDAO();
 
             try
             {
@@ -103,16 +103,16 @@ namespace TweetTrends.DB
             }
             catch
             {
-                return new Sentiments();
+                return new SentimentsDAO();
             }
 
             return sentimentsData;
         }
-        public StatesPolygons ReadStates(string dataPath, string file)
+        public StatePolygonsDAO ReadStates(string dataPath, string file)
         {
-            if ( string.IsNullOrWhiteSpace(dataPath) || string.IsNullOrWhiteSpace(file) ) return new StatesPolygons();
+            if ( string.IsNullOrWhiteSpace(dataPath) || string.IsNullOrWhiteSpace(file) ) return new StatePolygonsDAO();
 
-            StatesPolygonsData = new StatesPolygons();
+            StatesPolygonsData = new StatePolygonsDAO();
             string fullPath = dataPath + "\\" + file;
             try
             {
@@ -121,7 +121,7 @@ namespace TweetTrends.DB
             }
             catch
             {
-                return new StatesPolygons();
+                return new StatePolygonsDAO();
             }
 
             StatesPolygonsData.FillPoints();

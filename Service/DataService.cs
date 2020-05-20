@@ -11,7 +11,7 @@ namespace TweetTrends.Service
     {
         private static DataBase _dataBase = DataBase.GetInstance();
 
-        public static StatesPolygons GetPolygons => _dataBase.StatesPolygonsData;
-        public static Sentiments GetSentiments => _dataBase.SentimentsData;
+        public static StatePolygonsDAO GetPolygons => _dataBase.StatesPolygonsData;
+        public static SentimentsDAO GetSentiments => _dataBase.SentimentsData;
     }
 }

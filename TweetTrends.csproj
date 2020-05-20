@@ -85,7 +85,7 @@
     </ApplicationDefinition>
     <Compile Include="DB\Polygon.cs" />
     <Compile Include="DB\DataBase.cs" />
-    <Compile Include="DB\StatesPolygons.cs" />
+    <Compile Include="DB\StatePolygonsDAO.cs" />
     <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\GMapPolygonHole.cs" />
     <Compile Include="Service\DataService.cs" />
@@ -98,7 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DB\Sentiments.cs" />
+    <Compile Include="DB\SentimentsDAO.cs" />
     <Compile Include="Model\Sentiment.cs" />
     <Compile Include="Service\RegexParser.cs" />
     <Compile Include="DB\Tweets.cs" />
